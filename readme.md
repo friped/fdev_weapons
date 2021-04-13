@@ -10,7 +10,7 @@ This code require the use of es_extended(https://github.com/esx-framework/es_ext
 
 #Installation
 
-1. Open up client/main.lua in es_extenden and find:
+1. Open up client/main.lua in es_extended and find:
 
 RegisterNetEvent('esx:addInventoryItem')
 AddEventHandler('esx:addInventoryItem', function(item, count, showNotification)
@@ -54,6 +54,11 @@ end)
 
 	ESX.UI.ShowInventoryItemNotification(false, v.label, v.count - count)
 
-3. Setup the weapons and components in Config.lua file according to what weapons you use and want to use on your server.
+3. Setup the weapons and components in Config.lua file according to what weapons you want to use on your server.
+	For weapons with out ammunition such as the stun gun leave the blank and for throwables use the weapon item as the ammoItem just like the pre-setup is made.
 
-4. Setup the all of the items you'll need for the script to work in you'r database.
+4. Edit the fdev_weapons.sql so weight works for the server your running.
+
+5. Run the fdev_weapon.sql into your database and if you add custom weapons or components remember to add them as well.
+
+

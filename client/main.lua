@@ -14,13 +14,14 @@ local ammoGive = false
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(500)
+
         local playerPed = GetPlayerPed(-1)
 
         for k, v in pairs(Config.Weapons) do
             local weaponHash = GetHashKey(v.weapon)
+            local ammoType = GetPedAmmoTypeFromWeapon(playerPed, weaponHash)
 
             if HasPedGotWeapon(playerPed, weaponHash, false) then
-                local ammoType = GetPedAmmoTypeFromWeapon(playerPed, weaponHash)
                 local ammoCount = GetPedAmmoByType(playerPed, ammoType)
 
 
@@ -31,13 +32,21 @@ Citizen.CreateThread(function()
                         TriggerServerEvent('FDev:AmmoUpdate', v.ammoItem, ammoCount)
                     end
                 end
+
+            elseif v.weapon == v.ammoItem and ammoCount[ammoType] > 0 then
+                TriggerServerEvent('FDev:AmmoUpdate', v.ammoItem, 0)
             end
         end
     end
 end)
 
+
 AddEventHandler('esx:onPlayerSpawn', function()
     Citizen.Wait(2000)
+    TriggerServerEvent('FDev:WeaponSync')
+end)
+
+AddEventHandler('onClientResourceStart', function()
     TriggerServerEvent('FDev:WeaponSync')
 end)
 

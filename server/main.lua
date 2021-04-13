@@ -79,12 +79,17 @@ AddEventHandler('FDev:InventoryUpdate', function(playerId, item, amount, remove)
     end
 end)
 
+
 RegisterNetEvent('FDev:AmmoUpdate')
 AddEventHandler('FDev:AmmoUpdate', function(ammoItem, ammoCount)
     local playerId = source
     local xPlayer = ESX.GetPlayerFromId(playerId)
 
-    xPlayer.setInventoryItem(ammoItem, ammoCount)
+    for k, v in pairs(Config.Weapons) do
+        if ammoItem == v.ammoItem then
+            xPlayer.setInventoryItem(ammoItem, ammoCount)
+        end
+    end
 end)
 
 AddEventHandler('esx:onAddInventoryItem', function(playerId, itemName, itemCount)
