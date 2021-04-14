@@ -36,6 +36,7 @@ Citizen.CreateThread(function()
                 end
 
             elseif v.weapon == v.ammoItem and ammoCount[ammoType] > 0 then
+                ammoCount[ammoType] = 0
                 TriggerServerEvent('FDev:AmmoUpdate', v.ammoItem, 0)
             end
         end
