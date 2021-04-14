@@ -79,17 +79,24 @@ AddEventHandler('FDev:InventoryUpdate', function(playerId, item, amount, remove)
     end
 end)
 
+local ammoUpdate = false
 
 RegisterNetEvent('FDev:AmmoUpdate')
 AddEventHandler('FDev:AmmoUpdate', function(ammoItem, ammoCount)
+    ammoUpdate = true
+
     local playerId = source
     local xPlayer = ESX.GetPlayerFromId(playerId)
-
+   
+   
+      
     for k, v in pairs(Config.Weapons) do
         if ammoItem == v.ammoItem then
             xPlayer.setInventoryItem(ammoItem, ammoCount)
         end
     end
+
+    ammoUpdate = false
 end)
 
 AddEventHandler('esx:onAddInventoryItem', function(playerId, itemName, itemCount)
@@ -97,5 +104,7 @@ AddEventHandler('esx:onAddInventoryItem', function(playerId, itemName, itemCount
 end)
 
 AddEventHandler('esx:onRemoveInventoryItem', function(playerId, itemName, itemCount)
-    TriggerEvent('FDev:InventoryUpdate', playerId, itemName, itemCount, true)
+    if not ammoUpdate then
+        TriggerEvent('FDev:InventoryUpdate', playerId, itemName, itemCount, true)
+    end
 end)

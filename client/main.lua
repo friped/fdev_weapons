@@ -27,8 +27,10 @@ Citizen.CreateThread(function()
 
                 if ammoCounts[ammoType] ~= nil then
                     if ammoCounts[ammoType] > ammoCount then
+                        ammoCounts[ammoType] = ammoCount
                         TriggerServerEvent('FDev:AmmoUpdate', v.ammoItem, ammoCount)
                     elseif ammoCounts[ammoType] < ammoCount and not ammoGive then
+                        ammoCounts[ammoType] = ammoCount
                         TriggerServerEvent('FDev:AmmoUpdate', v.ammoItem, ammoCount)
                     end
                 end
