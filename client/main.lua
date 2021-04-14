@@ -48,10 +48,6 @@ AddEventHandler('esx:onPlayerSpawn', function()
     TriggerServerEvent('FDev:WeaponSync')
 end)
 
-AddEventHandler('onClientResourceStart', function()
-    TriggerServerEvent('FDev:WeaponSync')
-end)
-
 RegisterNetEvent('FDev:UpdateWeapon')  
 AddEventHandler('FDev:UpdateWeapon', function(weaponName, ammoCount, removeWeapon, ammoOnly, weaponSync)
     local playerPed = GetPlayerPed(-1)
