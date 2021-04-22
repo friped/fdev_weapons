@@ -3,7 +3,7 @@ games { 'gta5' }
 
 author 'Friped'
 description 'ESX - Item for weapons'
-version '1.2.0'
+version '1.3.0'
 
 client_scripts {
     'config.lua',

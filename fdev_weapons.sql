@@ -51,8 +51,5 @@ INSERT INTO `items` (`name`, `label`, `weight`) VALUES
 
     ('grenade', 'Grenade', 1000),
     ('bzgas', 'BZ Gas', 1000),
-    ('molotov', 'Molotov', 1000),
-
-    -- Miscellaneous
-    ('parachute', 'Parachute', 1000)
+    ('molotov', 'Molotov', 1000)
 ;
