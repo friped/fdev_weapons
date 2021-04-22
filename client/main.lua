@@ -37,9 +37,7 @@ Citizen.CreateThread(function()
                         if ammoCounts[ammoType] > maxAmmoCount then
                             
                             ammoCountCorrection = lastAmmoCounts[ammoType] - ammoCount
-                            ESX.ShowNotification(ammoCountCorrection)
                             ammoCountCorrection = ammoCounts[ammoType] - ammoCountCorrection
-                            ESX.ShowNotification(ammoCountCorrection)
 
                             SetPedAmmoByType(playerPed, ammoType, ammoCountCorrection)
                             ammoCount = GetPedAmmoByType(playerPed, ammoType)
