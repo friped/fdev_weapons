@@ -8,6 +8,7 @@ Citizen.CreateThread(function()
 	
 end)
 
+local lastAmmoCounts = {}
 local ammoCounts = {}
 local ammoGive = false
 
@@ -23,20 +24,45 @@ Citizen.CreateThread(function()
 
             if HasPedGotWeapon(playerPed, weaponHash, false) then
                 local ammoCount = GetPedAmmoByType(playerPed, ammoType)
-
+                local maxAmmo, maxAmmoCount = GetMaxAmmoByType(playerPed, ammoType)
+                local ammoCountCorrection
 
                 if ammoCounts[ammoType] ~= nil then
-                    if ammoCounts[ammoType] > ammoCount then
-                        ammoCounts[ammoType] = ammoCount
-                        TriggerServerEvent('FDev:AmmoUpdate', v.ammoItem, ammoCount)
+
+                    if lastAmmoCounts[ammoType] == nil then
+                        lastAmmoCounts[ammoType] = ammoCount
+                    end
+
+                    if ammoCounts[ammoType] > ammoCount and lastAmmoCounts[ammoType] ~= ammoCount and not ammoGive then
+                        if ammoCounts[ammoType] > maxAmmoCount then
+                            
+                            ammoCountCorrection = lastAmmoCounts[ammoType] - ammoCount
+                            ESX.ShowNotification(ammoCountCorrection)
+                            ammoCountCorrection = ammoCounts[ammoType] - ammoCountCorrection
+                            ESX.ShowNotification(ammoCountCorrection)
+
+                            SetPedAmmoByType(playerPed, ammoType, ammoCountCorrection)
+                            ammoCount = GetPedAmmoByType(playerPed, ammoType)
+                            
+                        else
+                            ammoCountCorrection = ammoCount
+                        end
+
+                        ammoCounts[ammoType] = ammoCountCorrection
+                        lastAmmoCounts[ammoType] = ammoCount
+
+                        TriggerServerEvent('FDev:AmmoUpdate', v.ammoItem, ammoCountCorrection)
                     elseif ammoCounts[ammoType] < ammoCount and not ammoGive then
                         ammoCounts[ammoType] = ammoCount
+                        lastAmmoCounts[ammoType] = ammoCount
                         TriggerServerEvent('FDev:AmmoUpdate', v.ammoItem, ammoCount)
                     end
                 end
 
             elseif v.weapon == v.ammoItem and ammoCount[ammoType] > 0 then
                 ammoCount[ammoType] = 0
+                lastAmmoCounts[ammoType] = 0
+                
                 TriggerServerEvent('FDev:AmmoUpdate', v.ammoItem, 0)
             end
         end
@@ -82,7 +108,7 @@ AddEventHandler('FDev:UpdateWeapon', function(weaponName, ammoCount, removeWeapo
         ammoCounts[ammoType] = ammoCount
 
         SetPedAmmoByType(playerPed, ammoType, ammoCount)
-
+        lastAmmoCounts[ammoType] = GetPedAmmoByType(playerPed, ammoType)
         ammoGive = false
     end
 end)
