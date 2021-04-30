@@ -93,6 +93,7 @@ AddEventHandler('FDev:AmmoUpdate', function(ammoItem, ammoCount)
     for k, v in pairs(Config.Weapons) do
         if ammoItem == v.ammoItem then
             xPlayer.setInventoryItem(ammoItem, ammoCount)
+            break
         end
     end
 
