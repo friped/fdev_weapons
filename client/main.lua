@@ -123,3 +123,18 @@ AddEventHandler('FDev:UpdateWeaponComponent', function(weaponName, componentHash
     end
     
 end)
+
+if Config.UsableItems then
+
+    RegisterNetEvent('FDev:equipWeapon')
+    AddEventHandler('FDev:equipWeapon', function(weaponName)
+        local playerPed = GetPlayerPed(-1)
+        local weaponHash = GetHashKey(weaponName)
+
+        if GetSelectedPedWeapon(playerPed) ~= weaponHash then
+            SetCurrentPedWeapon(playerPed, weaponHash, true)
+        else
+            SetCurrentPedWeapon(playerPed, GetHashKey('WEAPON_UNARMED'), true)
+        end
+    end)
+end

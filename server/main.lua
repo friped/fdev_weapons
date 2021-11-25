@@ -109,3 +109,11 @@ AddEventHandler('esx:onRemoveInventoryItem', function(playerId, itemName, itemCo
         TriggerEvent('FDev:InventoryUpdate', playerId, itemName, itemCount, true)
     end
 end)
+
+if Config.UsableItems then
+    for k, v in pairs(Config.Weapons) do
+        ESX.RegisterUsableItem(v.item, function(playerId)
+        TriggerClientEvent('FDev:equipWeapon', playerId, v.weapon)
+        end)
+    end
+end

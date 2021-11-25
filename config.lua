@@ -1,5 +1,7 @@
 Config = {}
 
+Config.UsableItems = false
+
 Config.Weapons = {
     -- Melee Weapons
     {weapon = 'WEAPON_BAT', item = 'bat', ammoItem = ''},
